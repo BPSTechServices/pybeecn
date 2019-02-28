@@ -1,0 +1,11 @@
+*.egg-info
+*.pyc
+*.class
+*.iml
+.idea/*
+.settings
+version.py
+/bin/
+*.eggs
+*.pytest_cache
+.DS_Store
