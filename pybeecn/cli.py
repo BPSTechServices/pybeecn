@@ -20,24 +20,24 @@ def fail_message(msg):
 
 
 def warn_message(msg):
-    return "{}".format(msg)+"."*5+"{}WARNING{}".format(bcolors.WARNING,bcolors.ENDC)
-
+    return "{}".format(msg)+"."*5+"{}WARNING{}".format(bcolors.WARNING, bcolors.ENDC)
 
 def error_message(msg):
     return "{}".format(msg)+"."*5+"{}{}ERROR{}".format(bcolors.UNDERLINE, bcolors.FAIL,bcolors.ENDC)
 
 def run():
-    """
-    BEECN Command Line Interface (CLI) Application
-    :return:
+    """BEECN Command Line Interface (CLI) Application
+-------------------------------------------------------------
+Add description of the BEECN CLI tool and commands here
+
+-------------------------------------------------------------
     """
     epilog='\n For more information, please visit https://github.com/glmcbr06/pybeecn\n'
     epilog += ' or contact Gabriel McBride <gabe.l.mcbride@gmail.com>'
 
-    mainparser = argparse.ArgumentDefaultsHelpFormatter(
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        description=run.__doc__,
-        epilog=epilog)
+    mainparser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                         description=run.__doc__,
+                                         epilog=epilog)
 
     module_parsers = mainparser.add_subparsers()
 
@@ -55,13 +55,13 @@ def run():
             logging.warn('Got exception: {} when trying to load module...passing'.format(e))
             pass
         else:
-            if '__argparse__' in dir(module) and callable(module.__argparse_):
-                docs = module.__argparse_.__doc__
+            if '__argparse__' in dir(module) and callable(module.__argparse__):
+                docs = module.__argparse__.__doc__
                 mparser = module_parsers.add_parser(ep.name,
-                                                    help=docs[0],
+                                                    help='This is a test help',
                                                     description=docs,
                                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-                module.__argparse_(mparser.add_subparsers(), [verbose_parser])
+                module.__argparse__(mparser.add_subparsers(), [verbose_parser])
 
     args = mainparser.parse_args()
     if args.verbose > 0:
