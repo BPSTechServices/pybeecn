@@ -10,3 +10,4 @@ version.py
 *.eggs
 *.pytest_cache
 .DS_Store
+.benchmarks
