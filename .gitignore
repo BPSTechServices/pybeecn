@@ -2,7 +2,8 @@
 *.pyc
 *.class
 *.iml
-.idea/*
+.idea/vcs.xml
+.idea
 .settings
 version.py
 /bin/

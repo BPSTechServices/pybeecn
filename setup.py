@@ -7,15 +7,16 @@ with open('LICENSE') as f:
     liscense = f.read()
 
 # Install dependencies
-install_deps = []
 
-test_deps = install_deps + ['pytest~=3.4', 'pytest-mock', 'pytest-profiling', 'pytest-benchmark']
-
-analysis_deps = install_deps + test_deps + [
-    'matplotlib',
-    'numpy',
-    'pandas'
-]
+# install_deps = []
+#
+# test_deps = install_deps + ['pytest~=3.4', 'pytest-mock', 'pytest-profiling', 'pytest-benchmark']
+#
+# analysis_deps = install_deps + test_deps + [
+#     'matplotlib',
+#     'numpy',
+#     'pandas'
+# ]
 
 setup(
     name='pybeecn',
@@ -36,6 +37,9 @@ setup(
     entry_points={
         'beecn.subcommands': [
             'view = pybeecn.vis.cli'
+        ],
+        'console_scripts':[
+            'beecn=pybeecn.cli:run'
         ]
     }
 )
