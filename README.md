@@ -20,4 +20,4 @@ Find out what pybeecn has to offer by running:
 $ pybeecn -h
 ```
 ## Collaboration
-If you would like to contribute to the effort to improve Portland's BEECN program through the use of available data please contact Gabe McBride at [gabe.l.mcbride@gmail.com](gabe.l.mcbride@gmail.com).
+If you would like to contribute to the effort to improve Portland's BEECN program through the use of available data please contact Gabe McBride at [gabe.l.mcbride@gmail.com](mailto:gabe.l.mcbride@gmail.com).
