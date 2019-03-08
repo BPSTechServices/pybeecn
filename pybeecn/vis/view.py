@@ -19,7 +19,7 @@ Add description of the BEECN CLI tool and commands here
     :param args:
     :return:
     """
-    #
+    # url =
     url = 'https://opendata.arcgis.com/datasets/6e6185533d5447deb8b7204c27e1858e_92.geojson'
     url1 = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'
     grid = geopandas.read_file(url1)
@@ -32,7 +32,6 @@ Add description of the BEECN CLI tool and commands here
 
     # points['x'] = points.apply(getPolyCoords, geom='geometry', coord_type='x', axis=1)
     # points['y'] = points.apply(getPolyCoords, geom='geometry', coord_type='y', axis=1)
-
 
     f, ax = plt.subplots()
     grid.plot(ax=ax)
