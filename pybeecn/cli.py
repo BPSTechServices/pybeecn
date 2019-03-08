@@ -26,11 +26,13 @@ def error_message(msg):
     return "{}".format(msg)+"."*5+"{}{}ERROR{}".format(bcolors.UNDERLINE, bcolors.FAIL,bcolors.ENDC)
 
 def run():
-    """BEECN Command Line Interface (CLI) Application
+    """
+    BEECN Command Line Interface (CLI) Application
 -------------------------------------------------------------
 Add description of the BEECN CLI tool and commands here
 
 -------------------------------------------------------------
+    :return:
     """
     epilog='\n For more information, please visit https://github.com/glmcbr06/pybeecn\n'
     epilog += ' or contact Gabriel McBride <gabe.l.mcbride@gmail.com>'
@@ -44,7 +46,7 @@ Add description of the BEECN CLI tool and commands here
     verbose_parser = argparse.ArgumentParser(add_help=False)
     verbose_parser.add_argument('-v', '--verbose', action='count', default=0)
 
-    for ep in pkg_resources.iter_entry_points(group='beecn.subcommands'):
+    for ep in pkg_resources.iter_entry_points(group='pybeecn.subcommands'):
         # Look into module for __argparse_ method and load it.
         try:
             logging.info('Attempting to load: {}'.format(ep))

@@ -1,25 +1,7 @@
-# from setuptools import setup
-#
-# mycrolib_name = 'microlib.pybeecn'
-#
-# with open('README.md') as f:
-#     readme = f.read()
-# with open('LICENSE') as f:
-#     license = f.read()
-#
-# setup(
-#     name=mycrolib_name,
-#     author='Gabriel McBride',
-#     author_email='gabe.l.mcbride@gmail.com',
-#     long_descripiton=readme,
-#     description='Put description here',
-#     license=license
-# )
-
-
+from setuptools import setup, find_packages
 import logging
 logging.basicConfig(level=logging.INFO)
-from setuptools import setup, find_packages
+
 
 with open('README.md') as f:
     readme = f.read()
@@ -28,7 +10,6 @@ with open('LICENSE') as f:
     license = f.read()
 
 # Install dependencies
-
 install_deps = []
 
 test_deps = install_deps + ['pytest~=3.4', 'pytest-mock', 'pytest-profiling', 'pytest-benchmark']
@@ -41,7 +22,6 @@ analysis_deps = install_deps + test_deps + [
 
 setup(
     name='pybeecn',
-    description='A package that will provide command line interface tools for analysis',
     long_description=readme,
     author='Gabriel McBride',
     author_email='gabe.l.mcbride@gmail.com',
@@ -56,11 +36,8 @@ setup(
     },
     packages=find_packages(exclude=('tests', 'docs')),
     entry_points={
-        'beecn.subcommands': [
+        'pybeecn.subcommands': [
             'view = pybeecn.vis.cli'
-        ],
-        'console_scripts':[
-            'beecn=pybeecn.cli:run'
         ]
     }
 )
