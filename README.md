@@ -26,16 +26,12 @@ Additionally, an alternative to using PIP for managing a python environment is [
 ## Collaboration
 If you would like to contribute to the effort to improve Portland's BEECN program through the use of available data please contact Gabe McBride at [gabe.l.mcbride@gmail.com](mailto:gabe.l.mcbride@gmail.com).
 
-The standard practices for git development will be used in this project and are described 
-
-
-
 ### Development
 If you would like to contribute as a developer of the pybeecn module, please contact the email above and setup a working directory. Suggested directory structure:
 
 * Home directory
   * data (a place to keep relevant data to the project)
-
+  
   * projects (This will be where you clone the pybeecn repository)
   
 When you have the folder structure that you want run the following in the commad line:
