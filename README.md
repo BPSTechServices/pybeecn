@@ -10,6 +10,7 @@
 4. [Usage](#usage)
 
 ## Overview
+This project will be developed using a Systems Engineering approach along with utilizing the standard git development practices within each lifecycle phase. Here are a few places to reference for git development. [GitHub Guide](https://guides.github.com/introduction/flow/), [Stackoverflow](https://stackoverflow.com/questions/19695127/git-workflow-review), and [Atlassian](https://www.atlassian.com/git/tutorials/comparing-workflows)
 
 ### Purpose
 This effort will be focused on helping [Portland Bureau of Emergency Management](https://www.portlandoregon.gov/pbem/) and [Portland's Open Data Program](https://www.portlandoregon.gov/bps/76768) make decisions regarding the [BEECN](https://www.portlandoregon.gov/pbem/59630) Program. The effort may also provide insight that may prove useful for a number of other city efforts such as, the [NET](https://www.portlandoregon.gov/pbem/31667) Program. Our primary objective is to understand the behavior of the population and other characteristics of each neighborhood as well as the different demographics within the neighborhoods and how these populations will be affected given a major earthquake in the area. 
@@ -24,6 +25,8 @@ Additionally, an alternative to using PIP for managing a python environment is [
 
 ## Collaboration
 If you would like to contribute to the effort to improve Portland's BEECN program through the use of available data please contact Gabe McBride at [gabe.l.mcbride@gmail.com](mailto:gabe.l.mcbride@gmail.com).
+
+The standard practices for git development will be used in this project and are described 
 
 
 
@@ -41,7 +44,6 @@ cd ~/your_folder/your_folder
 git clone https://github.com/glmcbr06/pybeecn.git
 cd pybeecn
 pip install --upgrade --no-deps -e .
-
 ```
   
 
