@@ -12,9 +12,10 @@
 ## Overview
 
 ### Purpose
+This effort will be focused on helping [Portland Bureau of Emergency Management](https://www.portlandoregon.gov/pbem/) and [Portland's Open Data Program](https://www.portlandoregon.gov/bps/76768) make decisions regarding the [BEECN](https://www.portlandoregon.gov/pbem/59630) Program. The effort may also provide insight that may prove useful for a number of other city efforts such as, the [NET](https://www.portlandoregon.gov/pbem/31667) Program. Our primary objective is to understand the behavior of the population and other characteristics of each neighborhood as well as the different demographics within the neighborhoods and how these populations will be affected given a major earthquake in the area. 
 
 ## Installation
-Additional instructions on environment setup and dependencies are comming soon.
+Additional instructions on environment setup and dependencies are coming soon.
 
 ### Installing python and PIP
 If you do not have a python environment setup on your machine, please follow the instructions [here](https://penandpants.com/2012/02/24/install-python/). The page also provides a good description of the tools that will be used in the environment. Other general instructions for installing packages using PIP can be found [here](https://packaging.python.org/tutorials/installing-packages/).
