@@ -44,7 +44,7 @@ pip install --upgrade --no-deps -e .
   
 
 ## Usage
-Find out what pybeecn has to offer by running the followng in the commandline after your environment is :
+Find out what pybeecn has to offer by running the followng in the command line after your environment is :
 ```bash
 pybeecn -h
 ```
