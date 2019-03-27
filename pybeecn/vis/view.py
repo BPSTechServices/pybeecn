@@ -1,7 +1,7 @@
 import requests
 import matplotlib.pyplot as plt
 import geopandas
-from pybeecn.vis.beecn import getPolyCoords
+import os
 import descartes
 import json
 from shapely.geometry import mapping, shape
@@ -26,6 +26,12 @@ Add description of the BEECN CLI tool and commands here
     grid = geopandas.read_file(url1)
     points = geopandas.read_file(url)
 
+    ddir = os.path.join(args.directory, 'data_files')
+    if not ddir:
+        os.mkdir(ddir)
+    print(type(grid))
+    print(type(points))
+
     # print(grid.head())
     # print(list(grid))
     # print(list(points))
@@ -37,13 +43,15 @@ Add description of the BEECN CLI tool and commands here
         print(i)
 
 
-    # f, ax = plt.subplots()
-    # grid.plot(ax=ax)
-    # points.plot(color='green', ax=ax)
-    # plt.xlabel('Latitude')
-    # plt.ylabel('Longitude')
-    # plt.title('BEECN Locations in Portland, OR')
-    # plt.show()
+    f, ax = plt.subplots(figsize=(10,10))
+    grid.plot(ax=ax)
+    points.plot(color='green', ax=ax)
+    plt.xlabel('Latitude')
+    plt.ylabel('Longitude')
+    plt.title('BEECN Locations in Portland, OR')
+
+    if args.show:
+        plt.show()
 
 
 
