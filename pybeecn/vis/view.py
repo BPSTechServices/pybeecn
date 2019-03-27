@@ -2,6 +2,7 @@ import requests
 import matplotlib.pyplot as plt
 import geopandas
 import os
+import jupyter
 import descartes
 import json
 from shapely.geometry import mapping, shape
@@ -27,7 +28,7 @@ Add description of the BEECN CLI tool and commands here
     points = geopandas.read_file(url)
 
     ddir = os.path.join(args.directory, 'data_files')
-    if not ddir:
+    if not os.path.exists(ddir):
         os.mkdir(ddir)
     print(type(grid))
     print(type(points))
@@ -49,6 +50,8 @@ Add description of the BEECN CLI tool and commands here
     plt.xlabel('Latitude')
     plt.ylabel('Longitude')
     plt.title('BEECN Locations in Portland, OR')
+
+    jupyter
 
     if args.show:
         plt.show()

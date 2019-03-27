@@ -74,5 +74,4 @@ Add description of the BEECN CLI tool and commands here
         logging.basicConfig(level=logging.INFO,
                             format='%(asctime)s--%(name)s:%(levelname)s:--%(message)s')
         logging.getLogger().setLevel(logging.INFO)
-
     args.func(args)

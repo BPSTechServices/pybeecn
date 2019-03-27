@@ -37,7 +37,10 @@ setup(
     packages=find_packages(exclude=('tests', 'docs')),
     entry_points={
         'pybeecn.subcommands': [
-            'view = pybeecn.vis.cli'
+            'vis = pybeecn.vis.cli'
+        ],
+        'console_scripts': [
+            'pybeecn=pybeecn.cli:run'
         ]
     }
 )
