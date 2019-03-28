@@ -48,3 +48,5 @@ Find out what pybeecn has to offer by running the followng in the command line a
 ```bash
 pybeecn -h
 ```
+### Jupyter Notebook
+Insert instructions on how to use the Jupyter Notebook file here. 

@@ -6,6 +6,7 @@ import descartes
 import json
 from shapely.geometry import mapping, shape
 import pandas as pd
+import numpy as np
 from pandas.io.json import json_normalize
 import plotly.plotly as py
 import plotly.figure_factory as ff
@@ -29,8 +30,6 @@ Add description of the BEECN CLI tool and commands here
     if not os.path.exists(ddir):
         os.mkdir(ddir)
 
-    print(points)
-
     # print(grid.head())
     # print(list(grid))
     # print(list(points))
@@ -41,8 +40,37 @@ Add description of the BEECN CLI tool and commands here
 
     # for i in grid['NAME']:
     #     print(i)
-    for i in points['SITE_NAME']:
-        print(i)
+    points = pd.DataFrame(points)
+    print(points.head())
+    print(type(points))
+
+    points['geometry'] = points['geometry'].map(lambda x: str(x).lstrip('POINT (').rstrip(')'))
+
+    lat = []
+    lon = []
+
+    for row in points['geometry']:
+        try:
+            lon.append(row.split(' ')[0])
+            lat.append(row.split(' ')[1])
+        except:
+            lon.append(np.NaN)
+            lat.append(np.NaN)
+
+    points['latitude'] = lat
+    points['longitude'] = lon
+
+    print(points.head())
+
+    latitude = np.array(points['latitude'])
+    latitude = latitude.astype(float)
+    longitude = np.array(points['longitude'])
+    longitude = longitude.astype(float)
+    print(latitude)
+    print(longitude)
+
+    location = zip(latitude, longitude)
+    print(location)
 
 
     f, ax = plt.subplots(figsize=(10,10))
