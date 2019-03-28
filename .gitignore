@@ -3,8 +3,8 @@
 *.class
 *.iml
 .idea/vcs.xml
-.idea/
-.idea/*
+.idea
+.idea
 .settings
 version.py
 /bin/
