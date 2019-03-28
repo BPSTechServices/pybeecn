@@ -2,7 +2,6 @@ import requests
 import matplotlib.pyplot as plt
 import geopandas
 import os
-import jupyter
 import descartes
 import json
 from shapely.geometry import mapping, shape
@@ -21,7 +20,6 @@ Add description of the BEECN CLI tool and commands here
     :param args:
     :return:
     """
-    # url =
     url = 'https://opendata.arcgis.com/datasets/6e6185533d5447deb8b7204c27e1858e_92.geojson'
     url1 = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'
     grid = geopandas.read_file(url1)
@@ -30,8 +28,8 @@ Add description of the BEECN CLI tool and commands here
     ddir = os.path.join(args.directory, 'data_files')
     if not os.path.exists(ddir):
         os.mkdir(ddir)
-    print(type(grid))
-    print(type(points))
+
+    print(points)
 
     # print(grid.head())
     # print(list(grid))
@@ -40,7 +38,10 @@ Add description of the BEECN CLI tool and commands here
     # print(points['SITE_NAME'].unique())
 
     # grid['POPULATION'] = []
-    for i in grid['NAME']:
+
+    # for i in grid['NAME']:
+    #     print(i)
+    for i in points['SITE_NAME']:
         print(i)
 
 
@@ -51,7 +52,6 @@ Add description of the BEECN CLI tool and commands here
     plt.ylabel('Longitude')
     plt.title('BEECN Locations in Portland, OR')
 
-    jupyter
 
     if args.show:
         plt.show()

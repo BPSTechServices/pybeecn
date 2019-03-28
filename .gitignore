@@ -12,3 +12,4 @@ version.py
 *.pytest_cache
 .DS_Store
 .benchmarks
+*.ipynb_checkpoints/
