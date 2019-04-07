@@ -40,38 +40,38 @@ Add description of the BEECN CLI tool and commands here
 
     # for i in grid['NAME']:
     #     print(i)
-    points = pd.DataFrame(points)
-    print(points.head())
-    print(type(points))
 
-    points['geometry'] = points['geometry'].map(lambda x: str(x).lstrip('POINT (').rstrip(')'))
+    # points = pd.DataFrame(points)
+    # print(points.head())
+    # print(type(points))
 
-    lat = []
-    lon = []
-
-    for row in points['geometry']:
-        try:
-            lon.append(row.split(' ')[0])
-            lat.append(row.split(' ')[1])
-        except:
-            lon.append(np.NaN)
-            lat.append(np.NaN)
-
-    points['latitude'] = lat
-    points['longitude'] = lon
-
-    print(points.head())
-
-    latitude = np.array(points['latitude'])
-    latitude = latitude.astype(float)
-    longitude = np.array(points['longitude'])
-    longitude = longitude.astype(float)
-    print(latitude)
-    print(longitude)
-
-    location = zip(latitude, longitude)
-    print(location)
-
+    # points['geometry'] = points['geometry'].map(lambda x: str(x).lstrip('POINT (').rstrip(')'))
+    #
+    # lat = []
+    # lon = []
+    #
+    # for row in points['geometry']:
+    #     try:
+    #         lon.append(row.split(' ')[0])
+    #         lat.append(row.split(' ')[1])
+    #     except:
+    #         lon.append(np.NaN)
+    #         lat.append(np.NaN)
+    #
+    # points['latitude'] = lat
+    # points['longitude'] = lon
+    #
+    # print(points.head())
+    #
+    # latitude = np.array(points['latitude'])
+    # latitude = latitude.astype(float)
+    # longitude = np.array(points['longitude'])
+    # longitude = longitude.astype(float)
+    # print(latitude)
+    # print(longitude)
+    #
+    # location = zip(latitude, longitude)
+    # print(location)
 
     f, ax = plt.subplots(figsize=(10,10))
     grid.plot(ax=ax)
