@@ -49,4 +49,10 @@ Find out what pybeecn has to offer by running the followng in the command line a
 pybeecn -h
 ```
 ### Jupyter Notebook
-Insert instructions on how to use the Jupyter Notebook file here. 
+Insert instructions on how to use the Jupyter Notebook file here.
+
+## Processes
+This project will follow the standard git development processes described by the resources above in the [Overview](#overview) section. A brief description of the development processes are described in the following subsections. 
+
+### Branching
+To make a new feature or improvement of the pybeecn module
