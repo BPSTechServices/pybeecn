@@ -55,4 +55,11 @@ Insert instructions on how to use the Jupyter Notebook file here.
 This project will follow the standard git development processes described by the resources above in the [Overview](#overview) section. A brief description of the development processes are described in the following subsections. 
 
 ### Branching
-To make a new feature or improvement of the pybeecn module
+To make a new feature or improvement of the pybeecn module use:
+```bash
+git checkout -b feature/name_of_new_feature
+```
+or
+```bash
+git checkout -b improvement/name_of_new_feature
+```
