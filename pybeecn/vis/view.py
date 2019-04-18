@@ -41,7 +41,4 @@ Add description of the BEECN CLI tool and commands here
     if args.show:
             plt.show()
 
-    neigh_df = os.path.dirname(__file__)
-    print(neigh_df)
-
 
