@@ -17,7 +17,8 @@ test_deps = install_deps + ['pytest~=3.4', 'pytest-mock', 'pytest-profiling', 'p
 analysis_deps = install_deps + test_deps + [
     'matplotlib',
     'numpy',
-    'pandas'
+    'pandas',
+    'folium'
 ]
 
 setup(
