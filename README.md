@@ -1,4 +1,4 @@
-# WIP - PyBEECN
+# PyBEECN
 
 # Table of Contents
 
