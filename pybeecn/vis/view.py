@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import geopandas
 import os
 
-# Todo: folium not working in cli program. Works in jupyter notebook environment.
+# todo: folium not working in cli program. Works in jupyter notebook environment.
 #  Get working with cli for ability to save html files. May also lead to being able to use html in markdown file.
 # folium not working in cli program.
 # import folium
@@ -21,7 +21,7 @@ Add description of the BEECN CLI tool and commands here
     :return:
     """
 
-    data_dir = os.path.join(args.directory, 'data_files')
+    data_dir = os.path.join(args.directory, 'pybeecn_files')
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
 
@@ -37,18 +37,19 @@ Add description of the BEECN CLI tool and commands here
 
     print(df_grid)
 
-
+    # todo: get this plot to show populations.
     f, ax = plt.subplots(figsize=(10,10))
     df_grid.plot(ax=ax, color='green')
-    # df_points.plot(color='blue', ax=ax)
+    df_points.plot(color='blue', ax=ax)
     plt.xlabel('Latitude')
     plt.ylabel('Longitude')
     plt.title('BEECN Locations in Portland, OR')
+    f.savefig(os.path.join(plot_dir, 'beecn_locations.png'))
 
     if args.show:
             plt.show()
 
-    # Todo: get code below to run with folium working to save html map.
+    # todo: get code below to run with folium working to save html map.
     # neigh_geo = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'
     # data_dir = os.path.join(os.path.dirname(os.getcwd()), 'data')
     #
