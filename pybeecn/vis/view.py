@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import geopandas
 import os
+import jupyter
 import pandas as pd
 import plotly.plotly as py
 import plotly.graph_objs as graph_objs
