@@ -1,4 +1,4 @@
-import pybeecn.vis.beecn as bn
+import pybeecn.vis.view as vw
 
 def test_getPolyCoords():
     pass
