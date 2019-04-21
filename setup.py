@@ -18,7 +18,8 @@ analysis_deps = install_deps + test_deps + [
     'matplotlib',
     'numpy',
     'pandas',
-    'folium'
+    'folium',
+    'geopandas'
 ]
 
 setup(
