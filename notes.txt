@@ -17,4 +17,4 @@ Pytests
                 submodule --> test .py files for submodule
 
     21 April:
-        pytest passing but giving warnings. Moving on. 
+        pytest passing but giving warnings. Moving on.
