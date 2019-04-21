@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import geopandas
 import os
 import logging.config
+from . import beecn as bn
 logger = logging.getLogger(__name__)
 
 # todo: folium not working in cli program. Works in jupyter notebook environment.
@@ -22,35 +23,40 @@ Add description of the BEECN CLI tool and commands here
     :param args:
     :return:
     """
+    bn.create_beecn_dir(args.directory)
 
-    data_dir = os.path.join(args.directory, 'pybeecn_files')
-    if not os.path.exists(data_dir):
-        os.makedirs(data_dir)
-        logger.info('directory')
+    # if not os.path.exists(args.directory):
+    #     os.makedirs(args.directory)
+    #     logger.info('Creating')
+    #
+    # data_dir = os.path.join(args.directory, 'pybeecn_files')
+    # if not os.path.exists(data_dir):
+    #     os.makedirs(data_dir)
+    #     # logger.info('Directory ')
+    #
+    #
+    # plot_dir = os.path.join(args.directory, 'plot_files')
+    # if not os.path.exists(plot_dir):
+    #     os.makedirs(plot_dir)
 
 
-    plot_dir = os.path.join(args.directory, 'plot_files')
-    if not os.path.exists(plot_dir):
-        os.makedirs(plot_dir)
-
-
-    url = 'https://opendata.arcgis.com/datasets/6e6185533d5447deb8b7204c27e1858e_92.geojson'
-    url1 = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'
-    df_grid = geopandas.read_file(url1)
-    df_points = geopandas.read_file(url)
-
-
-    # todo: get this plot to show populations.
-    f, ax = plt.subplots(figsize=(10,10))
-    df_grid.plot(ax=ax, color='green')
-    df_points.plot(color='blue', ax=ax)
-    plt.xlabel('Latitude')
-    plt.ylabel('Longitude')
-    plt.title('BEECN Locations in Portland, OR')
-    f.savefig(os.path.join(plot_dir, 'beecn_locations.png'))
-
-    if args.show:
-            plt.show()
+    # url = 'https://opendata.arcgis.com/datasets/6e6185533d5447deb8b7204c27e1858e_92.geojson'
+    # url1 = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'
+    # df_grid = geopandas.read_file(url1)
+    # df_points = geopandas.read_file(url)
+    #
+    #
+    # # todo: get this plot to show populations.
+    # f, ax = plt.subplots(figsize=(10,10))
+    # df_grid.plot(ax=ax, color='green')
+    # df_points.plot(color='blue', ax=ax)
+    # plt.xlabel('Latitude')
+    # plt.ylabel('Longitude')
+    # plt.title('BEECN Locations in Portland, OR')
+    # f.savefig(os.path.join(plot_dir, 'beecn_locations.png'))
+    #
+    # if args.show:
+    #         plt.show()
 
     # todo: get code below to run with folium working to save html map.
     # neigh_geo = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'

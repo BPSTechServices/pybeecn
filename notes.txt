@@ -3,3 +3,9 @@ add trade offs
     cli vs jupyter notebook
 questions
     can you 'use' jupyter notebook from a cli?
+
+Pytests
+    when running pytest for all pytest works.
+
+    when trying to run it for individual files, there is an error saying pybeecn module does not exist. May be because of working in virtual environment mode for development. Try to create a 'make.py' file form scratch.
+    Need to get individual pytests to work. 
