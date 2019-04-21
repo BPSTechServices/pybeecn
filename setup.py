@@ -19,7 +19,7 @@ analysis_deps = install_deps + test_deps + [
     'numpy',
     'pandas',
     'folium',
-    'geopandas'
+    'geopandas',
 ]
 
 setup(
@@ -31,7 +31,7 @@ setup(
     setup_requires=['setuptools_scm'],
     tests_require=test_deps,
     use_scm_version=True,
-    install_requires=install_deps,
+    install_requires=analysis_deps,
     include_package_data=True,
     extras_require={
         'tests': test_deps
