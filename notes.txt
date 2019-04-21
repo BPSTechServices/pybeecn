@@ -1,0 +1,5 @@
+Add references
+add trade offs
+    cli vs jupyter notebook
+questions
+    can you 'use' jupyter notebook from a cli?

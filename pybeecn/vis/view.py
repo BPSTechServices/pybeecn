@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import geopandas
 import os
+import logging.config
+logger = logging.getLogger(__name__)
 
 # todo: folium not working in cli program. Works in jupyter notebook environment.
 #  Get working with cli for ability to save html files. May also lead to being able to use html in markdown file.
@@ -24,6 +26,8 @@ Add description of the BEECN CLI tool and commands here
     data_dir = os.path.join(args.directory, 'pybeecn_files')
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
+        logger.info('directory')
+
 
     plot_dir = os.path.join(args.directory, 'plot_files')
     if not os.path.exists(plot_dir):
@@ -35,7 +39,6 @@ Add description of the BEECN CLI tool and commands here
     df_grid = geopandas.read_file(url1)
     df_points = geopandas.read_file(url)
 
-    print(df_grid)
 
     # todo: get this plot to show populations.
     f, ax = plt.subplots(figsize=(10,10))
