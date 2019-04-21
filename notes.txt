@@ -15,3 +15,6 @@ Pytests
         tests
             module --> test install
                 submodule --> test .py files for submodule
+
+    21 April:
+        pytest passing but giving warnings. Moving on. 

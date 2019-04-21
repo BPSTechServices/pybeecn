@@ -30,4 +30,5 @@ def test_plot_beecns():
     bn.plot_beecns(beecn_url, neighborhood_url, plot_dir)
 
     assert os.path.getsize(plot_dir) > 0
+    logger.info('{} directory has size {}'.format(plot_dir, os.path.getsize(plot_dir)))
     shutil.rmtree(plot_dir)
