@@ -31,7 +31,7 @@ setup(
     setup_requires=['setuptools_scm'],
     tests_require=test_deps,
     use_scm_version=True,
-    install_requires=analysis_deps,
+    install_requires=install_deps,
     include_package_data=True,
     extras_require={
         'tests': test_deps

@@ -6,10 +6,6 @@ logger = logging.getLogger(__name__)
 
 # todo: folium not working in cli program. Works in jupyter notebook environment.
 #  Get working with cli for ability to save html files. May also lead to being able to use html in markdown file.
-# folium not working in cli program.
-# import folium
-# import branca
-
 
 def view(args):
     """
@@ -41,9 +37,12 @@ Add description of the BEECN CLI tool and commands here
         os.makedirs(data_dir)
 
     # todo: get this plot to show populations by size.
-    beecn_url = 'https://opendata.arcgis.com/datasets/6e6185533d5447deb8b7204c27e1858e_92.geojson'
-    neighborhood_url = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'
-    bn.plot_beecn_png(beecn_url, neighborhood_url, plot_dir, show=args.show if args.show else False)
+    beecn_geo = 'https://opendata.arcgis.com/datasets/6e6185533d5447deb8b7204c27e1858e_92.geojson'
+    neighborhood_geo = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'
+    bn.plot_beecn_png(beecn_geo, neighborhood_geo, plot_dir, show=args.show if args.show else False)
+
+    population_csv = args.filePath
+    bn.plot_beecn_html(neighborhood_geo, plot_dir, population_csv)
 
     # todo: get code below to run with folium working to save html map.
     # neigh_geo = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'

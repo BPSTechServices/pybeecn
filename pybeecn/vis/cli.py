@@ -14,6 +14,7 @@ Add description of the BEECN CLI tool and commands here
     # Add arguments to the parser
     parser.add_argument('--show', default=False, action='store_true', help='show the plots during runtime')
     parser.add_argument('--directory', required=True, help='directory where to store the files generated from the analysis')
+    parser.add_argument('--filePath','-f', required=True, help='csv file with population data')
     parser.set_defaults(func=vw.view)
 
 def __argparse__(subp, parents=[]):
