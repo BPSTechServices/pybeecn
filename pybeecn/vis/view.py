@@ -2,10 +2,10 @@ import os
 import shutil
 import logging.config
 from . import beecn as bn
+import pandas as pd
+import geopandas as gpd
 logger = logging.getLogger(__name__)
 
-# todo: folium not working in cli program. Works in jupyter notebook environment.
-#  Get working with cli for ability to save html files. May also lead to being able to use html in markdown file.
 
 def view(args):
     """
@@ -42,34 +42,8 @@ Add description of the BEECN CLI tool and commands here
     bn.plot_beecn_png(beecn_geo, neighborhood_geo, plot_dir, show=args.show if args.show else False)
 
     population_csv = args.filePath
-    bn.plot_beecn_html(neighborhood_geo, plot_dir, population_csv)
 
-    # todo: get code below to run with folium working to save html map.
-    # neigh_geo = 'https://opendata.arcgis.com/datasets/9f50a605cf4945259b983fa35c993fe9_125.geojson'
-    # data_dir = os.path.join(os.path.dirname(os.getcwd()), 'vis_data')
-    #
-    # neighbor_file = os.path.join(data_dir, 'neighborhood_population.csv')
-    #
-    # # Way Jupyter Notebook and local machine read in files is different. Use this
-    # if os.path.exists(neighbor_file):
-    #     neighbor_df = pd.read_csv(neighbor_file)
-    # else:
-    #     data_dir = os.path.join(os.getcwd(), 'pybeecn/vis_data')
-    #     neighbor_file = os.path.join(data_dir, 'neighborhood_population.csv')
-    #     neighbor_df = pd.read_csv(neighbor_file)
-    #
-    # print(neighbor_df.head())
-    #
-    # m = folium.Map(location=[45.5236, -122.6750])
-    # folium.Choropleth(geo_data=neigh_geo,
-    #                   name='2010 Population',
-    #                   vis_data=neighbor_df,
-    #                   columns=['OBJECTID', 'POPULATION'],
-    #                   key_on='feature.properties.OBJECTID',
-    #                   fill_color='YlGn',
-    #                   fill_opacity=0.7,
-    #                   line_opacity=0.2,
-    #                   legend_name='Neighborhood Population Size',
-    #                   ).add_to(m)
-    # folium.LayerControl().add_to(m)
-    # m.save(plot_dir, 'map.html')
+    bn.plot_beecn_html(neighborhood_geo, plot_dir, beecn_geo, population_csv)
+
+    # bn.plot_beecn_html(neighborhood_geo, plot_dir, population_csv, population_column='White alone (NHoL)').add_to(m)
+

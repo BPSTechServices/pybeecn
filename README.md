@@ -53,3 +53,5 @@ Insert instructions on how to use the Jupyter Notebook file here.
 
 ## References
 https://www.portlandoregon.gov/civic/56897
+
+folium tooltip helpful advice: https://github.com/python-visualization/folium/issues/469

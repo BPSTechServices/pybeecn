@@ -2,6 +2,7 @@ import pkg_resources
 import logging
 import argparse
 
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -12,24 +13,33 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 def pass_message(msg):
     return '{}'.format(msg)+'.'*5+'{}PASSED'.format(bcolors.OKGREEN, bcolors.ENDC)
 
+
 def fail_message(msg):
-    return "{}".format(msg)+"."*5+"{}FAILED{}".format(bcolors.FAIL,bcolors.ENDC)
+    return "{}".format(msg)+"."*5+"{}FAILED{}".format(bcolors.FAIL, bcolors.ENDC)
 
 
 def warn_message(msg):
     return "{}".format(msg)+"."*5+"{}WARNING{}".format(bcolors.WARNING, bcolors.ENDC)
 
+
 def error_message(msg):
-    return "{}".format(msg)+"."*5+"{}{}ERROR{}".format(bcolors.UNDERLINE, bcolors.FAIL,bcolors.ENDC)
+    return "{}".format(msg)+"."*5+"{}{}ERROR{}".format(bcolors.UNDERLINE, bcolors.FAIL, bcolors.ENDC)
+
 
 def run():
     """
-    BEECN Command Line Interface (CLI) Application
+        BEECN Command Line Interface (CLI) Application
 -------------------------------------------------------------
-Add description of the BEECN CLI tool and commands here
+PURPOSE:
+The purpose of this command line tool will be to help the
+Portland Open Data Program and Portland Bureau of Emergency
+Management visualize the different demographic populations
+throughout the city along with the BEECN locations
+established by the BEECN Program.
 
 -------------------------------------------------------------
     :return:
@@ -60,7 +70,7 @@ Add description of the BEECN CLI tool and commands here
             if '__argparse__' in dir(module) and callable(module.__argparse__):
                 docs = module.__argparse__.__doc__
                 mparser = module_parsers.add_parser(ep.name,
-                                                    help='This is a test help',
+                                                    help='BEECN visualization module',
                                                     description=docs,
                                                     formatter_class=argparse.RawDescriptionHelpFormatter)
                 module.__argparse__(mparser.add_subparsers(), [verbose_parser])

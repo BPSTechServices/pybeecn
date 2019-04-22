@@ -3,6 +3,7 @@ add trade offs
     cli vs jupyter notebook
 questions
     can you 'use' jupyter notebook from a cli?
+ogre.adc4gis.com
 
 Add csv parser? so you can give it population info about each neighborhood total pop and other race pop, and output a csv file in the form that I already have? Sounds achievable.
 

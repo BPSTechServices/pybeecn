@@ -1,15 +1,30 @@
+"""
+This work was authored by Gabriel McBride in support
+of Portland Open Data Program and Portland Bureau of
+Emergency Management BEECN Program. The effort was
+conducted as a use case for the student's masters
+project to study the interaction between Systems
+Engineering and Data Science activities.
+"""
+
 import argparse
 from . import view as vw
 
 def setup_beecn_parser(subp, parents):
-    """BEECN Command Line Interface (CLI) Application
+    """
+    BEECN Command Line Interface (CLI) Application
 -------------------------------------------------------------
-Add description of the BEECN CLI tool and commands here
+Purpose:
+The purpose of this module is
+
 
 -------------------------------------------------------------
+    :param subp:
+    :param parents:
+    :return:
     """
     # Create the parser
-    parser = subp.add_parser('locations', formatter_class=argparse.RawDescriptionHelpFormatter, description=setup_beecn_parser.__doc__, help='view the locations of BEECN sites', parents=parents)
+    parser = subp.add_parser('beecn-locations', formatter_class=argparse.RawDescriptionHelpFormatter, description=setup_beecn_parser.__doc__, help='view the locations of BEECN sites', parents=parents)
 
     # Add arguments to the parser
     parser.add_argument('--show', default=False, action='store_true', help='show the plots during runtime')
