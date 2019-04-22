@@ -42,8 +42,8 @@ Add description of the BEECN CLI tool and commands here
     bn.plot_beecn_png(beecn_geo, neighborhood_geo, plot_dir, show=args.show if args.show else False)
 
     population_csv = args.filePath
-
-    bn.plot_beecn_html(neighborhood_geo, plot_dir, beecn_geo, population_csv)
+    column=args.column
+    bn.plot_beecn_html(neighborhood_geo, plot_dir, beecn_geo, population_csv, population_column=column)
 
     # bn.plot_beecn_html(neighborhood_geo, plot_dir, population_csv, population_column='White alone (NHoL)').add_to(m)
 

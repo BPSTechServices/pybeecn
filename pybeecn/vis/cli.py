@@ -29,7 +29,8 @@ The purpose of this module is
     # Add arguments to the parser
     parser.add_argument('--show', default=False, action='store_true', help='show the plots during runtime')
     parser.add_argument('--directory', required=True, help='directory where to store the files generated from the analysis')
-    parser.add_argument('--filePath','-f', required=True, help='csv file with population data')
+    parser.add_argument('--filePath', '-f', required=True, help='csv file with population data')
+    parser.add_argument('--column', '-c', default='Total', type=str)
     parser.set_defaults(func=vw.view)
 
 def __argparse__(subp, parents=[]):
