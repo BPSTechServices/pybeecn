@@ -8,7 +8,7 @@ Engineering and Data Science activities.
 """
 
 import argparse
-from . import view as vw
+from pybeecn.vis.mapping import view_map
 
 def setup_beecn_parser(subp, parents):
     """
@@ -24,14 +24,16 @@ The purpose of this module is
     :return:
     """
     # Create the parser
-    parser = subp.add_parser('beecn-locations', formatter_class=argparse.RawDescriptionHelpFormatter, description=setup_beecn_parser.__doc__, help='view the locations of BEECN sites', parents=parents)
+    parser = subp.add_parser('map', formatter_class=argparse.RawDescriptionHelpFormatter, description=setup_beecn_parser.__doc__, help='view the locations of BEECN sites', parents=parents)
 
     # Add arguments to the parser
     parser.add_argument('--show', default=False, action='store_true', help='show the plots during runtime')
     parser.add_argument('--directory', required=True, help='directory where to store the files generated from the analysis')
     parser.add_argument('--filePath', '-f', required=True, help='csv file with population data')
     parser.add_argument('--column', '-c', default='Total', type=str)
-    parser.set_defaults(func=vw.view)
+    parser.add_argument('--boundaries', help='Geographic boundaries for the map to plot')
+    parser.add_argument('--points', help='The points to add to the map')
+    parser.set_defaults(func=view_map)
 
 def __argparse__(subp, parents=[]):
     """BEECN Application

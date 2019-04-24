@@ -6,8 +6,9 @@ conducted as a use case for the student's masters
 project to study the interaction between Systems
 Engineering and Data Science activities.
 """
-from pybeecn.vis import view
+from pybeecn.vis import mapping
 
 
 def test_view():
+    
     pass
