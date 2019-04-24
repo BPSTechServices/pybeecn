@@ -68,29 +68,6 @@ def plot_beecn_png(beecn_url, neighborhood_url, plot_dir, show=False, figwidth=1
 def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv, population_column='Total', fill_color='YlGn', fill_opacity=0.6, line_opacity=0.2):
 
     population_df = pd.read_csv(population_csv)
-    m = folium.Map(location=[45.5236, -122.6750], zoom_start=11.5)
-
-    population = folium.Choropleth(
-                                   geo_data=boundary_url,
-                                   data=population_df,
-                                   columns=['OBJECTID', population_column],
-                                   key_on='feature.properties.OBJECTID',
-                                   fill_color=fill_color,
-                                   fill_opacity=fill_opacity,
-                                   line_opacity=line_opacity,
-                                   legend_name='Neighborhood {} Population Size'.format(population_column),
-                                   highlight=True,
-                                   name='2010 {} Population'.format(population_column),
-                                   show=True
-    ).add_to(m)
-    folium.GeoJson(
-        boundary_url,
-        tooltip=folium.features.GeoJsonTooltip(fields=['NAME'],
-                                               localize=True,
-                                               sticky=True),
-        smooth_factor=0.01
-    ).add_to(population.geojson)
-
     points_gpd = gpd.read_file(points_url)
     points_df = pd.DataFrame(points_gpd)
 
@@ -113,8 +90,32 @@ def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv
     latitude = latitude.astype(float)
     longitude = np.array(points_df['longitude'])
     longitude = longitude.astype(float)
+    # m = folium.Map(location=[45.5236, -122.6750], zoom_start=11.5)
+    m = folium.Map(location=[latitude.mean(), longitude.mean()], zoom_start=11.5)
+    population = folium.Choropleth(
+                                   geo_data=boundary_url,
+                                   data=population_df,
+                                   columns=['OBJECTID', population_column],
+                                   key_on='feature.properties.OBJECTID',
+                                   fill_color=fill_color,
+                                   fill_opacity=fill_opacity,
+                                   line_opacity=line_opacity,
+                                   legend_name='Neighborhood {} Population Size'.format(population_column),
+                                   highlight=True,
+                                   name='2010 {} Population'.format(population_column),
+                                   show=True
+    ).add_to(m)
+    folium.GeoJson(
+        boundary_url,
+        tooltip=folium.features.GeoJsonTooltip(fields=['NAME'],
+                                               localize=True,
+                                               sticky=True),
+        smooth_factor=0.01
+    ).add_to(population.geojson)
+
     # todo: Figure out more generic way to do this so other data can come in
     #  or make a separate function to add the tool tip.
+
     beecn_site = points_df['SITE_NAME']
     address = points_df['LOCATION']
 
