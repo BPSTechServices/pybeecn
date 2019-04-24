@@ -65,13 +65,35 @@ def plot_beecn_png(beecn_url, neighborhood_url, plot_dir, show=False, figwidth=1
     return
 
 
-def plot_beecn_html(neighborhood_geo, plot_dir, beecn_geo, population_csv, population_column='Total', fill_color='YlGn', fill_opacity=0.6, line_opacity=0.2):
-    neighborhood_geo = neighborhood_geo
-    population_df = pd.read_csv(population_csv)
-    m = folium.Map(location=[45.5236, -122.6750], zoom_start=11.5)
+def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv, population_column='Total', fill_color='YlGn', fill_opacity=0.6, line_opacity=0.2):
 
+    population_df = pd.read_csv(population_csv)
+    points_gpd = gpd.read_file(points_url)
+    points_df = pd.DataFrame(points_gpd)
+
+    points_df['geometry'] = points_df['geometry'].map(lambda x: str(x).lstrip('POINT (').rstrip(')'))
+    lat = []
+    lon = []
+
+    for row in points_df['geometry']:
+        try:
+            lon.append(row.split(' ')[0])
+            lat.append(row.split(' ')[1])
+        except:
+            lon.append(np.NaN)
+            lat.append(np.NaN)
+
+    points_df['latitude'] = lat
+    points_df['longitude'] = lon
+
+    latitude = np.array(points_df['latitude'])
+    latitude = latitude.astype(float)
+    longitude = np.array(points_df['longitude'])
+    longitude = longitude.astype(float)
+    # m = folium.Map(location=[45.5236, -122.6750], zoom_start=11.5)
+    m = folium.Map(location=[latitude.mean(), longitude.mean()], zoom_start=11.5)
     population = folium.Choropleth(
-                                   geo_data=neighborhood_geo,
+                                   geo_data=boundary_url,
                                    data=population_df,
                                    columns=['OBJECTID', population_column],
                                    key_on='feature.properties.OBJECTID',
@@ -84,54 +106,35 @@ def plot_beecn_html(neighborhood_geo, plot_dir, beecn_geo, population_csv, popul
                                    show=True
     ).add_to(m)
     folium.GeoJson(
-        neighborhood_geo,
+        boundary_url,
         tooltip=folium.features.GeoJsonTooltip(fields=['NAME'],
                                                localize=True,
                                                sticky=True),
         smooth_factor=0.01
     ).add_to(population.geojson)
 
-    beecn_geo = gpd.read_file(beecn_geo)
-    beecn_df = pd.DataFrame(beecn_geo)
+    # todo: Figure out more generic way to do this so other data can come in
+    #  or make a separate function to add the tool tip.
 
-    beecn_df['geometry'] = beecn_geo['geometry'].map(lambda x: str(x).lstrip('POINT (').rstrip(')'))
-    lat = []
-    lon = []
-
-    for row in beecn_df['geometry']:
-        try:
-            lon.append(row.split(' ')[0])
-            lat.append(row.split(' ')[1])
-        except:
-            lon.append(np.NaN)
-            lat.append(np.NaN)
-
-    beecn_df['latitude'] = lat
-    beecn_df['longitude'] = lon
-
-    latitude = np.array(beecn_df['latitude'])
-    latitude = latitude.astype(float)
-    longitude = np.array(beecn_df['longitude'])
-    longitude = longitude.astype(float)
-    beecn_site = beecn_geo['SITE_NAME']
-    address = beecn_geo['LOCATION']
+    beecn_site = points_df['SITE_NAME']
+    address = points_df['LOCATION']
 
     location = zip(latitude, longitude)
 
-    beecn_fg = folium.FeatureGroup(name='BEECN Locations')
+    points_fg = folium.FeatureGroup(name='BEECN Locations')
     ring_fg = folium.FeatureGroup(name='1600m Radius')
     count = 0
     for i in location:
         tooltip = '<b>Name</b>: {} <br> ' \
                   '<b>Address</b>: {} <br>' .format(beecn_site[count], address[count])
         folium.Marker(i, icon=folium.Icon(icon='medkit', prefix='fa'),
-                      tooltip=tooltip).add_to(beecn_fg)
+                      tooltip=tooltip).add_to(points_fg)
         folium.Circle(i,
                       weight=1.5,
                       radius=1600).add_to(ring_fg)
         count += 1
 
-    beecn_fg.add_to(m)
+    points_fg.add_to(m)
     ring_fg.add_to(m)
     m.add_child(folium.LayerControl())
 

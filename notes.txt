@@ -22,3 +22,25 @@ Pytests
     21 April:
         pytest passing but giving warnings. Moving on.
 
+
+PROCESSES
+Effective merge process:
+    determine branch type (feature, improvement, etc)
+    determine branch name (what will be done on it)
+        create new branch
+            push branch
+            view on github remote
+            create draft pull request
+            create description of what is to be done on branch
+        Add code to branch
+            add code to tests
+        verify pytests pass
+            run pytest
+                verify pytests pass
+         push code to remote
+         update pull request
+            change from draft pull request
+
+FUNCTIONS and REQUIREMENTS
+
+CHARACTERISTICS

@@ -15,8 +15,20 @@ def setup_beecn_parser(subp, parents):
     BEECN Command Line Interface (CLI) Application
 -------------------------------------------------------------
 Purpose:
-The purpose of this module is
+Provide a command line interface for viewing map boundary
+data and points along with relevant population data.
 
+Usage:
+To run this command line utility download the associated
+population data from
+
+<https://github.com/glmcbr06/pybeecn/blob/master/
+data/Census_2010_Data_Cleanedup_Neighborhoods2.csv>
+
+Navigate to the page>Hold option or alt>click Raw
+
+use this data to view a cloropleth of a variety of
+demographic populations in Portland, OR by neighborhoods.
 
 -------------------------------------------------------------
     :param subp:
@@ -31,8 +43,8 @@ The purpose of this module is
     parser.add_argument('--directory', required=True, help='directory where to store the files generated from the analysis')
     parser.add_argument('--filePath', '-f', required=True, help='csv file with population data')
     parser.add_argument('--column', '-c', default='Total', type=str)
-    parser.add_argument('--boundaries', help='Geographic boundaries for the map to plot')
-    parser.add_argument('--points', help='The points to add to the map')
+    parser.add_argument('--boundaries', required=True, help='Geographic boundaries for the map to plot')
+    parser.add_argument('--points', required=True, help='The points to add to the map')
     parser.set_defaults(func=view_map)
 
 def __argparse__(subp, parents=[]):
@@ -42,7 +54,6 @@ def __argparse__(subp, parents=[]):
     :param parents:
     :return:
     """
-
 
     setup_beecn_parser(subp, parents)
 
