@@ -10,5 +10,5 @@ from pybeecn.vis import mapping
 
 
 def test_view():
-    
+
     pass
