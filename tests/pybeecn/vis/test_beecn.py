@@ -51,7 +51,7 @@ def test_plot_beecn_html():
     assert os.path.exists(population_csv)
 
     os.makedirs(plot_dir)
-    bn.plot_beecn_html(neighborhood_geo, plot_dir, beecn_geo,population_csv)
+    bn.plot_population_map_html(neighborhood_geo, plot_dir, beecn_geo,population_csv)
 
     assert os.path.getsize(plot_dir) > 0
     logger.info('{} directory has size {}'.format(plot_dir, os.path.getsize(plot_dir)))
