@@ -7,55 +7,25 @@ project to study the interaction between Systems
 Engineering and Data Science activities. 
 """
 import os
-import logging.config
 import shutil
-import numpy as np
-import geopandas as gpd
+import logging.config
 import pandas as pd
+import geopandas as gpd
 import matplotlib.pyplot as plt
 import folium
+from folium import IFrame
+import numpy as np
 logger = logging.getLogger(__name__)
 
 
-def create_beecn_dir(directory):
-    if not os.path.exists(directory):
-        logger.info('creating directory {}...'.format(directory))
-        os.makedirs(directory)
-    else:
-        logger.info('{} already exists...overwriting'.format(directory))
-        shutil.rmtree(directory)
-        os.makedirs(directory)
-    return directory
 
-
-def beecn_lat_long(beecn_geo):
-    beecn_geo = gpd.read_file(beecn_geo)
-    beecn_df = pd.DataFrame(beecn_geo)
-
-    beecn_df['geometry'] = beecn_df['geometry'].map(lambda x: str(x).lstrip('POINT (').rstrip(')'))
-    lat = []
-    lon = []
-
-    for row in beecn_df['geometry']:
-        try:
-            lon.append(row.split(' ')[0])
-            lat.append(row.split(' ')[1])
-        except:
-            lon.append(np.NaN)
-            lat.append(np.NaN)
-
-    beecn_df['latitude'] = lat
-    beecn_df['longitude'] = lon
-    return beecn_df
-
-
-def plot_beecn_png(beecn_url, neighborhood_url, plot_dir, show=False, figwidth=10, figheight=10, beecncolor='blue', neighborhoodcolor='green'):
-    neighborhood_df = gpd.read_file(neighborhood_url)
-    beecn_df = gpd.read_file(beecn_url)
+# Make Visualization Functions
+# ----------------------------------------------------------------------------------------------------------------------
+def plot_boundary_points_png(point_gpd: gpd.geodataframe, boundary_gpd: gpd.geodataframe, plot_dir, show=False, figwidth=10, figheight=10, point_color='blue', boundary_color='green'):
 
     f, ax = plt.subplots(figsize=(figwidth, figheight))
-    neighborhood_df.plot(ax=ax, color=neighborhoodcolor)
-    beecn_df.plot(ax=ax, color=beecncolor)
+    boundary_gpd.plot(ax=ax, color=boundary_color)
+    point_gpd.plot(ax=ax, color=point_color)
     plt.xlabel('Latitude')
     plt.ylabel('Longitude')
     plt.title('BEECN Locations in Portland, OR')
@@ -65,11 +35,36 @@ def plot_beecn_png(beecn_url, neighborhood_url, plot_dir, show=False, figwidth=1
     return
 
 
-def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv, population_column='Total', fill_color='YlGn', fill_opacity=0.6, line_opacity=0.2):
+def setup_analysis_directory(directory):
+    directory = os.path.abspath(directory)
+    dirs = dict(
+        plots=os.path.join(directory, 'plot_files'),
+        data=os.path.join(directory, 'data_files'),
+        alerts=os.path.join(directory, 'alert_files'),
+        report=os.path.join(directory, 'final_report')
+    )
 
-    population_df = pd.read_csv(population_csv)
+    # Creating New Analysis Directory (if required)
+    if not os.path.exists(directory):
+        logger.info("Creating New Analysis Directory: {}".format(directory))
+        os.makedirs(directory)
+
+    # Creating Sub directories
+    for name, d in dirs.items():
+        if not os.path.exists(d):
+            logger.info("Creating Analysis {} Directory: {}".format(name, d))
+            os.makedirs(d)
+
+    return dirs
+
+
+def plot_population_map_html(boundary_url, points_url, plot_dir, population_column='Total_Pop_5_n_over', fill_color='YlGn', fill_opacity=0.6, line_opacity=0.2):
     points_gpd = gpd.read_file(points_url)
     points_df = pd.DataFrame(points_gpd)
+    population_df = gpd.read_file(boundary_url)
+    pop_list = ['OBJECTID', 'Total_Pop_5_n_over', 'Spanish', 'Russian', 'Other_Slavic', 'Other_Indic',
+                'Other_Indo_European', 'Chinese', 'Japanese', 'Korean', 'Mon_Khmer_Cambodian', 'Laotian', 'Vietnamese',
+                'Other_Asian', 'Tagalog', 'Other_Pacific_Island', 'Arabic', 'African']
 
     points_df['geometry'] = points_df['geometry'].map(lambda x: str(x).lstrip('POINT (').rstrip(')'))
     lat = []
@@ -90,7 +85,7 @@ def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv
     latitude = latitude.astype(float)
     longitude = np.array(points_df['longitude'])
     longitude = longitude.astype(float)
-    # m = folium.Map(location=[45.5236, -122.6750], zoom_start=11.5)
+
     m = folium.Map(location=[latitude.mean(), longitude.mean()], zoom_start=11.5)
     population = folium.Choropleth(
                                    geo_data=boundary_url,
@@ -100,14 +95,14 @@ def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv
                                    fill_color=fill_color,
                                    fill_opacity=fill_opacity,
                                    line_opacity=line_opacity,
-                                   legend_name='Neighborhood {} Population Size'.format(population_column),
+                                   legend_name='{} Population Size by Tract'.format(population_column),
                                    highlight=True,
-                                   name='2010 {} Population'.format(population_column),
+                                   name='Date {} Population'.format(population_column),
                                    show=True
     ).add_to(m)
     folium.GeoJson(
         boundary_url,
-        tooltip=folium.features.GeoJsonTooltip(fields=['NAME'],
+        tooltip=folium.features.GeoJsonTooltip(fields=pop_list,
                                                localize=True,
                                                sticky=True),
         smooth_factor=0.01
@@ -115,7 +110,6 @@ def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv
 
     # todo: Figure out more generic way to do this so other data can come in
     #  or make a separate function to add the tool tip.
-
     beecn_site = points_df['SITE_NAME']
     address = points_df['LOCATION']
 
@@ -126,7 +120,7 @@ def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv
     count = 0
     for i in location:
         tooltip = '<b>Name</b>: {} <br> ' \
-                  '<b>Address</b>: {} <br>' .format(beecn_site[count], address[count])
+                  '<b>Address</b>: {} <br>'.format(beecn_site[count], address[count])
         folium.Marker(i, icon=folium.Icon(icon='medkit', prefix='fa'),
                       tooltip=tooltip).add_to(points_fg)
         folium.Circle(i,
@@ -138,10 +132,63 @@ def plot_population_map_html(boundary_url, points_url, plot_dir,  population_csv
     ring_fg.add_to(m)
     m.add_child(folium.LayerControl())
 
+    # text = 'Here is some test text'
+    # iframe = IFrame(text, width=700, height=450)
+    # popup = folium.Popup(iframe, max_width=3000)
+    #
+    # Text = folium.Marker(location=[latitude.max(), longitude.max()], popup=popup,
+    #                      icon=folium.Icon(icon_color='black'), draggable=True)
+    #
+    # m.add_child(Text)
+
     map_path = os.path.join(plot_dir, '{}_population_map.html'.format(population_column))
-    logger.info('saving {}'.format(map_path))
     m.save(map_path)
 
     return m
 
+# Make data functions
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+def geo_json_to_df(geo_url: str):
+    data = gpd.read_file(geo_url)
+    return data
+
+
+def get_id_and_pop(data: pd.DataFrame):
+    pop_list = ['OBJECTID', 'TRACT', 'Total_Pop_5_n_over', 'Spanish', 'Russian', 'Other_Slavic', 'Other_Indic',
+                'Other_Indo_European', 'Chinese', 'Japanese', 'Korean', 'Mon_Khmer_Cambodian', 'Laotian', 'Vietnamese',
+                'Other_Asian', 'Tagalog', 'Other_Pacific_Island', 'Arabic', 'African']
+    data = pd.DataFrame(data, columns=pop_list)
+    return data
+
+
+def make_totals_df(data: pd.DataFrame):
+
+    pop_dict = {}
+    for col in data:
+        if not col == 'OBJECTID' and not col == 'TRACT':
+            pop_dict[col] = data[col].sum()
+    df = pd.DataFrame.from_dict(pop_dict, orient='index', columns=['population'])
+    # total_total = df.loc[df.index == 'Total_Pop_5_n_over'].iloc[0]
+    # pops_total = df.loc[df.index != 'Total_Pop_5_n_over'].iloc[0:len(df)]
+    # pops_sum = pops_total.population.sum()
+    # df.loc['other_over_5'] = total_total - pops_sum
+    df.index.names = ['demographic']
+    return df
+
+
+def make_tract_pops_df(df):
+    print(df)
+
+
+def make_population_bar(data: pd.DataFrame, ax=None):
+    data.plot.barh(ax=ax)
+
+
+def get_single_population(data_gpd, column):
+    single_pop_df = pd.DataFrame(data_gpd[[column, 'OBJECTID', 'NAME']])
+    # single_pop_df.loc['Total'] = single_pop_df['Total_Pop_5_n_over'].sum()
+    # Could make another percentage column here if necessary
+    return single_pop_df
 

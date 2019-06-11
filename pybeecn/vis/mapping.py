@@ -2,8 +2,8 @@ import os
 import shutil
 import logging.config
 from . import beecn as bn
-import pandas as pd
 import geopandas as gpd
+import matplotlib.pyplot as plt
 logger = logging.getLogger(__name__)
 
 
@@ -17,34 +17,51 @@ Add description of the BEECN CLI tool and commands here
     :param args:
     :return:
     """
-    # Create the directory structure.
+    pop_list = ['Total_Pop_5_n_over', 'Spanish', 'Russian', 'Other_Slavic', 'Other_Indic',
+                'Other_Indo_European', 'Chinese', 'Japanese', 'Korean', 'Mon_Khmer_Cambodian',
+                'Laotian', 'Vietnamese', 'Other_Asian', 'Tagalog', 'Other_Pacific_Island',
+                'Arabic', 'African']
 
-    beecn_dir = bn.create_beecn_dir(args.directory)
+    # Setup plot directory
+    # -----------------------------------------------------------------------------------------------------------------
+    directory = os.path.join(args.directory, 'beecn')
 
-    points_url = '{}'.format(args.points)
-    boundary_url = '{}'.format(args.boundaries)
+    # Setup the directory
+    # -----------------------------------------------------------------------------------------------------------------
+    dirs = bn.setup_analysis_directory(directory)
+    # These should be imported as args.urls or something
+    # -----------------------------------------------------------------------------------------------------------------
+    point_url = args.points
+    boundary_url = args.boundaries
+    beecn_gpd = gpd.read_file(point_url)  # args urls should go here.
+    tract_gpd = gpd.read_file(boundary_url)
 
-    # Create plots folder to store images/plots
-    plot_dir = os.path.join(beecn_dir, 'plots_dir')
-    if not os.path.exists(plot_dir):
-        os.makedirs(plot_dir)
-    else:
-        shutil.rmtree(plot_dir)
-        os.makedirs(plot_dir)
+    # plot_boundary_points_png(point_gpd=beecn_gpd, boundary_gpd=tract_gpd, plot_dir=dirs['plots'])
 
-    # Create vis_data folder to store vis_data files
-    data_dir = os.path.join(beecn_dir, 'data_dir')
-    if not os.path.exists(data_dir):
-        os.makedirs(data_dir)
-    else:
-        shutil.rmtree(data_dir)
-        os.makedirs(data_dir)
+    # Get the total Population data to plot
+    # -----------------------------------------------------------------------------------------------------------------
+    pop_df = bn.get_single_population(tract_gpd, column='Total_Pop_5_n_over')
 
-    bn.plot_beecn_png(points_url, boundary_url, plot_dir, show=args.show if args.show else False)
+    bn.plot_population_map_html(boundary_url=boundary_url, points_url=point_url, plot_dir=dirs['plots'])
 
-    population_csv = args.filePath
-    column=args.column
-    bn.plot_population_map_html(boundary_url,  points_url, plot_dir, population_csv, population_column=column)
+    # Make some data frames
+    # -----------------------------------------------------------------------------------------------------------------
+    geo_df = bn.geo_json_to_df(geo_url=boundary_url)
+    pops_id_tract_df = bn.get_id_and_pop(geo_df)
+    pops_df = bn.make_totals_df(pops_id_tract_df)
+    fname = os.path.join(dirs['data'], 'portland_total_populations.csv')
+    pops_df.to_csv(fname)
+    # Plot the populations
+    # -----------------------------------------------------------------------------------------------------------------
+    # f, ax = plt.subplot(nrows=1, ncols=1, figsize=(20, 20))
 
-    # bn.plot_beecn_html(neighborhood_geo, plot_dir, population_csv, population_column='White alone (NHoL)').add_to(m)
+    f, ax = plt.subplots(figsize=(10, 10))
+    bn.make_population_bar(pops_df[pops_df.index != 'Total_Pop_5_n_over'], ax=ax)
+    plt.title('Limited English Speaking Populations')
+    plt.tight_layout(pad=1.1)
+    fname = os.path.join(dirs['plots'], 'total_population_bar.png')
+    f.savefig(fname)
+
+    # Make population dfs
+    # -----------------------------------------------------------------------------------------------------------------
 
