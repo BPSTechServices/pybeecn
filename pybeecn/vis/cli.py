@@ -41,7 +41,6 @@ demographic populations in Portland, OR by neighborhoods.
     # Add arguments to the parser
     parser.add_argument('--show', default=False, action='store_true', help='show the plots during runtime')
     parser.add_argument('--directory', required=True, help='directory where to store the files generated from the analysis')
-    parser.add_argument('--filePath', '-f', required=True, help='csv file with population data')
     parser.add_argument('--column', '-c', default='Total', type=str)
     parser.add_argument('--boundaries', required=True, help='Geographic boundaries for the map to plot')
     parser.add_argument('--points', required=True, help='The points to add to the map')
